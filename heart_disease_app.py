@@ -13,10 +13,9 @@ templates = Jinja2Templates(directory="templates")
 
 # Bind home function to URL
 @app.get("/")
-def home(request: Request):
-    return templates.TemplateResponse(
-        "Heart Disease Classifier.html", {"request": request}
-    )
+async def home(request: Request):
+    context = {"request": request}  # Add the "request" key to the context
+    return templates.TemplateResponse("Heart Disease Classifier.html", context)
 
 
 # Bind predict function to URL
@@ -40,6 +39,10 @@ async def predict(request: Request):
     else:
         result = "The patient is likely to have heart disease!"
 
+    context = {"result": result, "output": prediction[0]}
+
     return templates.TemplateResponse(
-        "Heart Disease Classifier.html", {"result": result, "output": prediction[0]}
+        request,
+        "Heart Disease Classifier.html",
+        context,
     )
