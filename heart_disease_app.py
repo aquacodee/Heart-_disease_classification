@@ -14,7 +14,7 @@ templates = Jinja2Templates(directory="templates")
 # Bind home function to URL
 @app.get("/")
 async def home(request: Request):
-    context = {"request": request}  # Add the "request" key to the context
+    context = {"request": request}
     return templates.TemplateResponse("Heart Disease Classifier.html", context)
 
 
